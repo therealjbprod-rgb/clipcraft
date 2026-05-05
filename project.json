@@ -1,0 +1,28 @@
+{
+  "overview": "ClipCraft is a free, browser-based video editor with a professional multi-track timeline, universal keyframe animation, advanced effects (shake, blur, color-shift), graph editor for bezier curves, text overlays, custom preset creator, project dashboard, auth, and MP4 export.",
+  "features": [
+    "Multi-track timeline with drag-and-drop clips",
+    "Universal keyframe animation on any property",
+    "Graph editor with bezier curves and easing presets",
+    "Shake, blur, and color-shift effects with keyframe support",
+    "Text layers with keyframe-able opacity and position",
+    "Custom effect and transition preset creator",
+    "Built-in transitions: fade, slide, zoom, blur, spin, glitch",
+    "Project dashboard with autosave and recent projects",
+    "User authentication with personal project storage",
+    "Export to MP4 in 720p/1080p/4K with aspect ratio options",
+    "Light and dark mode with persistent preference",
+    "Undo/redo history with keyboard shortcuts"
+  ],
+  "category": "productivity",
+  "tags": [
+    "video-editor",
+    "timeline",
+    "keyframes",
+    "effects",
+    "transitions",
+    "export",
+    "capcut-alternative"
+  ],
+  "last_updated": "2026-05-05T08:46:18.752Z"
+}

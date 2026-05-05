@@ -1,0 +1,244 @@
+type UserPreferences = record {theme: Theme;};
+type TransitionType__1 = 
+ variant {
+   blur;
+   crossfade;
+   dissolve;
+   fadeToBlack;
+   glitch;
+   slide;
+   spin;
+   zoom;
+ };
+type TransitionType = 
+ variant {
+   crossfade;
+   dissolve;
+   fadeToBlack;
+   slide;
+   zoom;
+ };
+type TransitionPreset = 
+ record {
+   creatorId: principal;
+   id: PresetId;
+   isPublic: bool;
+   name: text;
+   params: vec record {
+                 text;
+                 float64;
+               };
+   transitionType: TransitionType__1;
+ };
+type Transition = 
+ record {
+   duration: float64;
+   transitionType: TransitionType;
+ };
+type TrackId = nat;
+type TimelineSnapshot = 
+ record {
+   clips: vec Clip;
+   musicTrack: opt MusicTrack;
+ };
+type Time = int;
+type Theme = 
+ variant {
+   dark;
+   light;
+ };
+type TextClipProps = 
+ record {
+   alignment: variant {
+                center;
+                left;
+                right;
+              };
+   bold: bool;
+   content: text;
+   fontColor: text;
+   fontFamily: text;
+   fontSize: float64;
+   italic: bool;
+ };
+type ProjectMeta = 
+ record {
+   createdAt: Time;
+   id: ProjectId;
+   lastModified: Time;
+   name: text;
+   owner: principal;
+   totalDuration: float64;
+ };
+type ProjectId = nat;
+type Project = 
+ record {
+   clips: vec Clip;
+   meta: ProjectMeta;
+   musicTrack: opt MusicTrack;
+ };
+type PresetId = nat;
+type MusicTrack = 
+ record {
+   fileRef: text;
+   muted: bool;
+   volume: float64;
+ };
+type KeyframeTrack = 
+ record {
+   keyframes: vec Keyframe;
+   propertyName: AnimatableProperty;
+ };
+type KeyframeId = nat;
+type Keyframe = 
+ record {
+   easing: EasingType;
+   id: KeyframeId;
+   time: float64;
+   value: float64;
+ };
+type EffectType = 
+ variant {
+   blur;
+   colorShift;
+   shake;
+ };
+type EffectPreset = 
+ record {
+   creatorId: principal;
+   effectType: EffectType;
+   id: PresetId;
+   isPublic: bool;
+   name: text;
+   params: vec record {
+                 text;
+                 float64;
+               };
+ };
+type EffectId = nat;
+type Effect = 
+ record {
+   effectType: EffectType;
+   id: EffectId;
+   keyframeTracks: vec KeyframeTrack;
+   params: vec record {
+                 text;
+                 float64;
+               };
+ };
+type EasingType = 
+ variant {
+   bounce;
+   easeIn;
+   easeInOut;
+   easeOut;
+   linear;
+ };
+type ColorFilter = 
+ record {
+   brightness: float64;
+   contrast: float64;
+   hueRotation: float64;
+   opacity: float64;
+   saturation: float64;
+ };
+type ClipType = 
+ variant {
+   audio;
+   image;
+   "text";
+   video;
+ };
+type ClipId = nat;
+type Clip = 
+ record {
+   clipType: ClipType;
+   colorFilter: ColorFilter;
+   duration: float64;
+   effects: vec Effect;
+   fileRef: text;
+   id: ClipId;
+   keyframeTracks: vec KeyframeTrack;
+   position: nat;
+   speed: float64;
+   textProps: opt TextClipProps;
+   trackId: TrackId;
+   transition: opt Transition;
+   trimIn: float64;
+   trimOut: float64;
+   volume: float64;
+ };
+type AnimatableProperty = 
+ variant {
+   blur_radius;
+   effect_intensity;
+   hue_shift;
+   opacity;
+   position_x;
+   position_y;
+   rotation;
+   saturation;
+   scale_x;
+   scale_y;
+   shake_intensity;
+   shake_speed;
+ };
+service : {
+  addClip: (projectId: ProjectId, trackId: TrackId, fileRef: text, clipType:
+   ClipType, duration: float64) -> (ClipId);
+  addEffect: (projectId: ProjectId, clipId: ClipId, effectType: EffectType,
+   params: vec record {
+                 text;
+                 float64;
+               }) -> (EffectId);
+  addKeyframe: (projectId: ProjectId, clipId: ClipId, propertyName:
+   AnimatableProperty, time: float64, value: float64, easing: EasingType) ->
+   (KeyframeId);
+  createProject: (name: text) -> (ProjectMeta);
+  deletePreset: (presetId: PresetId, isEffect: bool) -> ();
+  deleteProject: (projectId: ProjectId) -> ();
+  getClipKeyframeTracks: (projectId: ProjectId, clipId: ClipId) ->
+   (vec KeyframeTrack) query;
+  getProject: (projectId: ProjectId) -> (opt Project) query;
+  getUserPreferences: () -> (UserPreferences) query;
+  listEffectPresets: () -> (vec EffectPreset) query;
+  listProjects: () -> (vec ProjectMeta) query;
+  listTransitionPresets: () -> (vec TransitionPreset) query;
+  redo: (projectId: ProjectId) -> (opt TimelineSnapshot);
+  removeClip: (projectId: ProjectId, clipId: ClipId) -> ();
+  removeEffect: (projectId: ProjectId, clipId: ClipId, effectId: EffectId) ->
+   ();
+  removeKeyframe: (projectId: ProjectId, clipId: ClipId, propertyName:
+   AnimatableProperty, keyframeId: KeyframeId) -> ();
+  removeMusicTrack: (projectId: ProjectId) -> ();
+  renameProject: (projectId: ProjectId, newName: text) -> ();
+  reorderClip: (projectId: ProjectId, clipId: ClipId, newPos: nat) -> ();
+  saveEffectPreset: (name: text, effectType: EffectType, params:
+   vec record {
+         text;
+         float64;
+       }, isPublic: bool) -> (PresetId);
+  saveProject: (projectId: ProjectId) -> (ProjectMeta);
+  saveTransitionPreset: (name: text, transitionType: TransitionType__1,
+   params: vec record {
+                 text;
+                 float64;
+               }, isPublic: bool) -> (PresetId);
+  setMusicTrack: (projectId: ProjectId, fileRef: text, volume: float64) -> ();
+  setUserPreferences: (prefs: UserPreferences) -> ();
+  undo: (projectId: ProjectId) -> (opt TimelineSnapshot);
+  updateClip: (projectId: ProjectId, clipId: ClipId, fileRef: opt text,
+   speed: opt float64, volume: opt float64, trimIn: opt float64, trimOut:
+   opt float64, colorFilter: opt ColorFilter, transition:
+   opt opt Transition) -> ();
+  updateEffect: (projectId: ProjectId, clipId: ClipId, effectId: EffectId,
+   params: vec record {
+                 text;
+                 float64;
+               }) -> ();
+  updateKeyframe: (projectId: ProjectId, clipId: ClipId, propertyName:
+   AnimatableProperty, keyframeId: KeyframeId, value: opt float64, easing:
+   opt EasingType) -> ();
+  updateMusicTrack: (projectId: ProjectId, volume: opt float64, muted:
+   opt bool) -> ();
+}

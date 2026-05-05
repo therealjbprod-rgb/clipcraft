@@ -1,0 +1,196 @@
+// Version: 1.0.0
+type AnimatableProperty__178345328 =
+  {
+    #blur_radius;
+    #effect_intensity;
+    #hue_shift;
+    #opacity;
+    #position_x;
+    #position_y;
+    #rotation;
+    #saturation;
+    #scale_x;
+    #scale_y;
+    #shake_intensity;
+    #shake_speed
+  };
+type ClipId__1026507722 = Nat;
+type ClipMutable__543436061 =
+  {
+    var clipType : ClipType__417063768;
+    var colorFilter : ColorFilter__753281655;
+    var duration : Float;
+    var effects : [Effect__652597804];
+    var fileRef : Text;
+    id : ClipId__1026507722;
+    var keyframeTracks : [KeyframeTrack__380389097];
+    var position : Nat;
+    var speed : Float;
+    var textProps : ?TextClipProps__241971607;
+    trackId : TrackId__805605511;
+    var transition : ?Transition__720117597;
+    var trimIn : Float;
+    var trimOut : Float;
+    var volume : Float
+  };
+type ClipType__417063768 = {#audio; #image; #text; #video};
+type Clip__1209899 =
+  {
+    clipType : ClipType__417063768;
+    colorFilter : ColorFilter__753281655;
+    duration : Float;
+    effects : [Effect__652597804];
+    fileRef : Text;
+    id : ClipId__1026507722;
+    keyframeTracks : [KeyframeTrack__380389097];
+    position : Nat;
+    speed : Float;
+    textProps : ?TextClipProps__241971607;
+    trackId : TrackId__805605511;
+    transition : ?Transition__720117597;
+    trimIn : Float;
+    trimOut : Float;
+    volume : Float
+  };
+type ColorFilter__753281655 =
+  {
+    brightness : Float;
+    contrast : Float;
+    hueRotation : Float;
+    opacity : Float;
+    saturation : Float
+  };
+type Data__791452850<K, V> =
+  {var count : Nat__490723111; kvs : [var ?(K, V)]};
+type EasingType__932909547 =
+  {#bounce; #easeIn; #easeInOut; #easeOut; #linear};
+type EffectId__580689630 = Nat;
+type EffectPreset__1009849866 =
+  {
+    creatorId : Principal;
+    effectType : EffectType__35744641;
+    id : PresetId__826404308;
+    isPublic : Bool;
+    name : Text;
+    params : [(Text, Float)]
+  };
+type EffectType__35744641 = {#blur; #colorShift; #shake};
+type Effect__652597804 =
+  {
+    effectType : EffectType__35744641;
+    id : EffectId__580689630;
+    keyframeTracks : [KeyframeTrack__380389097];
+    params : [(Text, Float)]
+  };
+type Int__270357528 = Int__616954475;
+type Int__616954475 = Int;
+type Internal__8484328<K, V> =
+  {children : [var ?Node__46230540<K, V>]; data : Data__791452850<K, V>};
+type KeyframeId__111632957 = Nat;
+type KeyframeTrack__380389097 =
+  {
+    keyframes : [Keyframe__388474860];
+    propertyName : AnimatableProperty__178345328
+  };
+type Keyframe__388474860 =
+  {
+    easing : EasingType__932909547;
+    id : KeyframeId__111632957;
+    time : Float;
+    value : Float
+  };
+type Leaf__809889148<K, V> = {data : Data__791452850<K, V>};
+type List__415060402<T> = List__790383201<T>;
+type List__682399303<T> = ?(T, List__682399303<T>);
+type List__790383201<T> =
+  {
+    var blockIndex : Nat__490723111;
+    var blocks : [var [var ?T]];
+    var elementIndex : Nat__490723111
+  };
+type MusicTrack__884172411 = {fileRef : Text; muted : Bool; volume : Float};
+type Nat__490723111 = Nat__920180692;
+type Nat__920180692 = Nat;
+type Node__46230540<K, V> =
+  {#internal : Internal__8484328<K, V>; #leaf : Leaf__809889148<K, V>};
+type PresetId__826404308 = Nat;
+type ProjectId__661817938 = Nat;
+type ProjectInternal__889802613 =
+  {
+    clips : List__415060402<ClipMutable__543436061>;
+    createdAt : Time__900049286;
+    id : ProjectId__661817938;
+    var lastModified : Time__900049286;
+    var musicTrack : ?MusicTrack__884172411;
+    var name : Text;
+    owner : Principal;
+    redoStack : Stack__580160475<TimelineSnapshot__223617930>;
+    var totalDuration : Float;
+    undoStack : Stack__580160475<TimelineSnapshot__223617930>
+  };
+type Stack__120015145<T> = Stack__853060549<T>;
+type Stack__580160475<T> = Stack__120015145<T>;
+type Stack__853060549<T> =
+  {var size : Nat__490723111; var top : List__682399303<T>};
+type TextClipProps__241971607 =
+  {
+    alignment : {#center; #left; #right};
+    bold : Bool;
+    content : Text;
+    fontColor : Text;
+    fontFamily : Text;
+    fontSize : Float;
+    italic : Bool
+  };
+type Theme__897056239 = {#dark; #light};
+type Time__796480547 = Int__270357528;
+type Time__900049286 = Time__796480547;
+type TimelineSnapshot__223617930 =
+  {clips : [Clip__1209899]; musicTrack : ?MusicTrack__884172411};
+type TrackId__805605511 = Nat;
+type TransitionPreset__756664514 =
+  {
+    creatorId : Principal;
+    id : PresetId__826404308;
+    isPublic : Bool;
+    name : Text;
+    params : [(Text, Float)];
+    transitionType : TransitionType__648726613
+  };
+type TransitionType__648726613 =
+  {#blur; #crossfade; #dissolve; #fadeToBlack; #glitch; #slide; #spin; #zoom};
+type TransitionType__977018026 =
+  {#crossfade; #dissolve; #fadeToBlack; #slide; #zoom};
+type Transition__720117597 =
+  {duration : Float; transitionType : TransitionType__977018026};
+type UserPreferences__200170847 = {theme : Theme__897056239};
+actor {
+  stable effectPresets :
+    {
+      var blockIndex : Nat__490723111;
+      var blocks : [var [var ?EffectPreset__1009849866]];
+      var elementIndex : Nat__490723111
+    };
+  stable nextClipId : [var Nat];
+  stable nextEffectId : [var Nat];
+  stable nextKeyframeId : [var Nat];
+  stable nextPresetId : [var Nat];
+  stable nextProjectId : [var Nat];
+  stable projects :
+    {
+      var root :
+        Node__46230540<ProjectId__661817938, ProjectInternal__889802613>;
+      var size : Nat__490723111
+    };
+  stable transPresets :
+    {
+      var blockIndex : Nat__490723111;
+      var blocks : [var [var ?TransitionPreset__756664514]];
+      var elementIndex : Nat__490723111
+    };
+  stable userPreferences :
+    {
+      var root : Node__46230540<Principal, UserPreferences__200170847>;
+      var size : Nat__490723111
+    }
+};

@@ -1,0 +1,252 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --font-display: Space Grotesk, sans-serif;
+    --font-body: General Sans, sans-serif;
+    --font-mono: GeistMono, monospace;
+    --radius: 0.625rem;
+
+    --background: 0.98 0.005 260;
+    --foreground: 0.15 0.01 260;
+    --card: 0.96 0.008 260;
+    --card-foreground: 0.15 0.01 260;
+    --popover: 0.95 0.01 260;
+    --popover-foreground: 0.15 0.01 260;
+
+    --primary: 0.55 0.18 200;
+    --primary-foreground: 0.98 0.005 200;
+
+    --secondary: 0.88 0.01 260;
+    --secondary-foreground: 0.25 0.01 260;
+    --muted: 0.88 0.01 260;
+    --muted-foreground: 0.55 0.01 260;
+
+    --accent: 0.55 0.18 200;
+    --accent-foreground: 0.98 0.005 200;
+
+    --destructive: 0.55 0.22 25;
+    --destructive-foreground: 0.98 0.005 25;
+
+    --border: 0.9 0.008 260;
+    --input: 0.9 0.008 260;
+    --ring: 0.55 0.18 200;
+
+    --chart-1: 0.65 0.22 40;
+    --chart-2: 0.55 0.18 200;
+    --chart-3: 0.5 0.14 120;
+    --chart-4: 0.6 0.18 30;
+    --chart-5: 0.52 0.16 280;
+
+    --sidebar: 0.94 0.01 260;
+    --sidebar-foreground: 0.15 0.01 260;
+    --sidebar-primary: 0.55 0.18 200;
+    --sidebar-primary-foreground: 0.98 0.005 200;
+    --sidebar-accent: 0.88 0.01 260;
+    --sidebar-accent-foreground: 0.25 0.01 260;
+    --sidebar-border: 0.9 0.008 260;
+    --sidebar-ring: 0.55 0.18 200;
+  }
+
+  .dark {
+    --background: 0.12 0 0;
+    --foreground: 0.93 0.01 220;
+    --card: 0.17 0.005 240;
+    --card-foreground: 0.93 0.01 220;
+    --popover: 0.22 0.01 240;
+    --popover-foreground: 0.93 0.01 220;
+
+    --primary: 0.7 0.15 200;
+    --primary-foreground: 0.1 0 0;
+
+    --secondary: 0.25 0.03 240;
+    --secondary-foreground: 0.85 0.01 220;
+    --muted: 0.2 0.01 240;
+    --muted-foreground: 0.52 0.02 240;
+
+    --accent: 0.7 0.15 200;
+    --accent-foreground: 0.1 0 0;
+
+    --destructive: 0.6 0.2 30;
+    --destructive-foreground: 0.98 0 0;
+
+    --border: 0.28 0.02 240;
+    --input: 0.24 0.02 240;
+    --ring: 0.7 0.15 200;
+
+    --chart-1: 0.65 0.22 40;
+    --chart-2: 0.7 0.17 200;
+    --chart-3: 0.55 0.16 120;
+    --chart-4: 0.6 0.2 30;
+    --chart-5: 0.65 0.18 280;
+
+    --sidebar: 0.15 0.005 240;
+    --sidebar-foreground: 0.93 0.01 220;
+    --sidebar-primary: 0.7 0.15 200;
+    --sidebar-primary-foreground: 0.1 0 0;
+    --sidebar-accent: 0.22 0.01 240;
+    --sidebar-accent-foreground: 0.85 0.01 220;
+    --sidebar-border: 0.28 0.02 240;
+    --sidebar-ring: 0.7 0.15 200;
+  }
+
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground font-body antialiased;
+  }
+
+  @font-face {
+    font-family: "Space Grotesk";
+    src: url("/assets/fonts/SpaceGrotesk.woff2") format("woff2");
+    font-display: swap;
+  }
+
+  @font-face {
+    font-family: "General Sans";
+    src: url("/assets/fonts/GeneralSans.woff2") format("woff2");
+    font-display: swap;
+  }
+
+  @font-face {
+    font-family: "GeistMono";
+    src: url("/assets/fonts/GeistMono.woff2") format("woff2");
+    font-display: swap;
+  }
+}
+
+@layer utilities {
+  .transition-smooth {
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  .timeline-scrubber {
+    background: oklch(var(--primary));
+    box-shadow: 0 0 10px 2px oklch(var(--primary) / 0.5), 0 0 24px 4px
+      oklch(var(--primary) / 0.2);
+    transition: box-shadow 0.2s ease;
+  }
+  .dark .timeline-scrubber:hover {
+    box-shadow: 0 0 14px 3px oklch(var(--primary) / 0.7), 0 0 32px 6px
+      oklch(var(--primary) / 0.3);
+  }
+  .dark .playback-viewport {
+    background: oklch(0.06 0.03 260);
+    border: 1px solid oklch(var(--border));
+    border-radius: var(--radius);
+  }
+  .light .playback-viewport {
+    background: oklch(0.95 0.01 260);
+    border: 1px solid oklch(var(--border));
+    border-radius: var(--radius);
+  }
+  .playback-viewport {
+    border-radius: var(--radius);
+  }
+  .track-container {
+    background: oklch(var(--card));
+    border-left: 3px solid transparent;
+    transition: border-color 0.15s ease;
+  }
+  .track-active {
+    border-left-color: oklch(var(--primary));
+    background: oklch(var(--muted) / 0.4);
+  }
+  .clip-block {
+    border-radius: 4px;
+    border: 1px solid oklch(var(--primary) / 0.3);
+    overflow: hidden;
+    cursor: grab;
+    user-select: none;
+    transition: border-color 0.15s ease, box-shadow 0.15s ease;
+  }
+  .clip-block:active {
+    cursor: grabbing;
+  }
+  .clip-block.selected {
+    border-color: oklch(var(--primary));
+    box-shadow: 0 0 0 2px oklch(var(--primary) / 0.4);
+  }
+  .dark .clip-block-video {
+    background: linear-gradient(
+      135deg,
+      oklch(0.25 0.06 200),
+      oklch(0.2 0.04 220)
+    );
+  }
+  .dark .clip-block-audio {
+    background: linear-gradient(
+      135deg,
+      oklch(0.22 0.05 280),
+      oklch(0.18 0.03 260)
+    );
+  }
+  .dark .clip-block-image {
+    background: linear-gradient(
+      135deg,
+      oklch(0.24 0.06 150),
+      oklch(0.19 0.04 170)
+    );
+  }
+  .dark .clip-block-text {
+    background: linear-gradient(
+      135deg,
+      oklch(0.22 0.08 280),
+      oklch(0.18 0.06 300)
+    );
+  }
+  .light .clip-block-text {
+    background: linear-gradient(
+      135deg,
+      oklch(0.88 0.08 280),
+      oklch(0.85 0.06 300)
+    );
+  }
+  .light .clip-block-video {
+    background: linear-gradient(
+      135deg,
+      oklch(0.85 0.08 200),
+      oklch(0.88 0.06 220)
+    );
+  }
+  .light .clip-block-audio {
+    background: linear-gradient(
+      135deg,
+      oklch(0.88 0.06 280),
+      oklch(0.86 0.04 260)
+    );
+  }
+  .light .clip-block-image {
+    background: linear-gradient(
+      135deg,
+      oklch(0.87 0.07 150),
+      oklch(0.84 0.05 170)
+    );
+  }
+  .scrollbar-thin {
+    scrollbar-width: thin;
+    scrollbar-color: oklch(var(--border)) transparent;
+  }
+  .scrollbar-thin::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+  .scrollbar-thin::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  .scrollbar-thin::-webkit-scrollbar-thumb {
+    background: oklch(var(--border));
+    border-radius: 3px;
+  }
+  .font-display {
+    font-family: var(--font-display);
+  }
+  .font-body {
+    font-family: var(--font-body);
+  }
+  .font-mono {
+    font-family: var(--font-mono);
+  }
+}
